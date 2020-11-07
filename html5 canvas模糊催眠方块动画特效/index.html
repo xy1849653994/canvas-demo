@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+<meta charset="UTF-8">
+<title>Hypnotizing Pattern Component</title>
+
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script id="fragmentShader" type="x-shader/fragment">
+precision mediump float;
+
+uniform float time;
+uniform float width;
+uniform float height;
+
+void main () {
+  
+  vec2 p0 = vec2(gl_FragCoord) * (1.0 + sin(time * 1e-1) * 2.0);
+  float a = time * .05;
+  vec2 p = vec2(p0.x * cos(a) - p0.y * sin(a),
+                p0.x * sin(a) + p0.y * cos(a));
+  vec3 c = vec3(.5 + sin(p.x * 2.0 + time * .1) * .5, .5 + sin(p.y * 2.0 + time * .01 + .5) * .5, .5 + sin(time * .003 + 1.2) * .5);
+  
+  vec3 color = (c * 
+                sin(time + sin(p.x *.025)) * 
+                sin(time + sin(p.y *.025) ));
+  gl_FragColor = vec4(vec3(color), 1.0);
+}
+</script>
+<script id="vertexShader" type="x-shader/vertex">
+precision mediump float;
+attribute vec2 position;
+
+void main () {
+  gl_Position = vec4(position, 0, 1);
+} 
+</script>
+
+<div class="ui">
+
+</div>
+
+<script src='js/regl.js'></script>
+<script src='js/react.production.min.js'></script>
+<script src='js/react-dom.production.min.js'></script>
+<script src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>
